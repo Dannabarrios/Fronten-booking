@@ -75,9 +75,9 @@ export default function LandingPage() {
           <span className="text-xl font-black text-[#1e3a8a]">Renta<span className="text-[#3b82f6]">Movil</span></span>
           <div className="hidden md:flex items-center gap-6">
             {['Vehículos', 'Sucursales', 'Servicios', 'Tarifas', 'Soporte'].map(item => (
-              <a key={item} className="text-sm text-slate-600 font-medium hover:text-[#1e3a8a] transition-colors cursor-pointer">
-                {item}
-              </a>
+              item === 'Vehículos'
+                ? <Link key={item} to="/catalogo" className="text-sm text-slate-600 font-medium hover:text-[#1e3a8a] transition-colors cursor-pointer">{item}</Link>
+                : <a key={item} className="text-sm text-slate-600 font-medium hover:text-[#1e3a8a] transition-colors cursor-pointer">{item}</a>
             ))}
           </div>
           <div className="flex items-center gap-3">
@@ -166,7 +166,7 @@ export default function LandingPage() {
             <span className="text-base font-black text-[#1e3a8a] whitespace-nowrap">{car.precio}</span>
           </div>
         ))}
-        <Link to="/registro"
+        <Link to="/catalogo"
           className="block w-full mt-6 py-4 rounded-2xl bg-[#1e3a8a] text-white text-base font-bold text-center hover:bg-[#162d6e] transition-all">
           Ver toda la flota →
         </Link>
