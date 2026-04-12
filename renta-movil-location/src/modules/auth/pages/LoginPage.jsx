@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import logo from '../../../assets/logo.png'
 import { useLogin } from '../hooks/useLogin'
 
+
 export default function LoginPage() {
   const {
     correo, contrasena, mostrarPass, cargando,
@@ -119,9 +120,10 @@ export default function LoginPage() {
               </div>
 
               <div className="text-right -mt-1">
-             <span className="text-sm text-[#1e3a8a] font-semibold cursor-pointer hover:underline">
-                 ¿Olvidaste tu contraseña?
-             </span>
+            <Link to="/forgot-password" className="text-sm text-[#1e3a8a] font-semibold hover:underline">
+              ¿Olvidaste tu contraseña?
+            </Link>
+                
                 </div>
 
               <button type="submit" disabled={bloqueado || cargando}
