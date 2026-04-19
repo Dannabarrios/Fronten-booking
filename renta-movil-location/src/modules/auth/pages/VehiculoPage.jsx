@@ -29,7 +29,7 @@ const VEHICULOS = [
     tarifa: 95000,
     disponible: true,
     sucursal: 'Sede Centro',
-    imagen: 'https://www.motortrend.com/uploads/2022/10/2023-mazda3-sedan-front-three-quarter.jpg',
+    imagen: '/mazda3.jpeg',
     caracteristicas: { puertas: 4, pasajeros: 5, transmision: 'Automática', km: 5000 },
     seguros: ['SOAT', 'Básico'],
     calificacion: 4.6,
@@ -45,7 +45,7 @@ const VEHICULOS = [
     tarifa: 65000,
     disponible: true,
     sucursal: 'Sede Sur',
-    imagen: 'https://www.motortrend.com/uploads/2021/06/2022-kia-rio-front-three-quarter.jpg',
+    imagen: '/KiaPicanto_Ion2022.jpeg',
     caracteristicas: { puertas: 5, pasajeros: 4, transmision: 'Manual', km: 12000 },
     seguros: ['SOAT'],
     calificacion: 4.2,
@@ -61,7 +61,7 @@ const VEHICULOS = [
     tarifa: 180000,
     disponible: false,
     sucursal: 'Sede Norte',
-    imagen: 'https://www.motortrend.com/uploads/2023/01/2024-ford-f-150-front-three-quarter.jpg',
+    imagen: '/fordf150_lariat2024.jpeg',
     caracteristicas: { puertas: 4, pasajeros: 5, transmision: 'Automática', km: 2000 },
     seguros: ['SOAT', 'Todo Riesgo', 'Responsabilidad Civil', 'Asistencia Vial'],
     calificacion: 4.9,
@@ -77,7 +77,7 @@ const VEHICULOS = [
     tarifa: 210000,
     disponible: true,
     sucursal: 'Sede Este',
-    imagen: 'https://www.motortrend.com/uploads/2022/11/2023-bmw-3-series-front-three-quarter.jpg',
+    imagen: '/BMWSerie3_2023lujo.jpeg',
     caracteristicas: { puertas: 4, pasajeros: 5, transmision: 'Automática', km: 1500 },
     seguros: ['SOAT', 'Todo Riesgo Premium', 'Responsabilidad Civil'],
     calificacion: 4.9,
@@ -93,7 +93,7 @@ const VEHICULOS = [
     tarifa: 110000,
     disponible: true,
     sucursal: 'Sede Centro',
-    imagen: 'https://www.motortrend.com/uploads/2024/01/2024-byd-seagull-front-three-quarter.jpg',
+    imagen: '/byd seagull URBANO 2024.jpeg',
     caracteristicas: { puertas: 5, pasajeros: 4, transmision: 'Automática', km: 0 },
     seguros: ['SOAT', 'Todo Riesgo'],
     calificacion: 4.5,
@@ -109,7 +109,7 @@ const VEHICULOS = [
     tarifa: 105000,
     disponible: true,
     sucursal: 'Sede Sur',
-    imagen: 'https://www.motortrend.com/uploads/2023/06/2024-chevrolet-trax-front-three-quarter.jpg',
+    imagen: '/Chevrolet1.jpg',
     caracteristicas: { puertas: 5, pasajeros: 5, transmision: 'Automática', km: 8000 },
     seguros: ['SOAT', 'Básico'],
     calificacion: 4.3,
@@ -125,7 +125,7 @@ const VEHICULOS = [
     tarifa: 195000,
     disponible: false,
     sucursal: 'Sede Norte',
-    imagen: 'https://www.motortrend.com/uploads/2023/01/2023-hyundai-ioniq-6-front-three-quarter.jpg',
+    imagen: '/Hyundai Ioniq 6 sedan 2024.jpeg',
     caracteristicas: { puertas: 4, pasajeros: 5, transmision: 'Automática', km: 500 },
     seguros: ['SOAT', 'Todo Riesgo', 'Responsabilidad Civil'],
     calificacion: 4.7,
@@ -209,6 +209,8 @@ const CAT_COLORS = {
 /* ─── Modal detalle ─── */
 function DetalleModal({ vehiculo, onClose, rol }) {
   if (!vehiculo) return null
+  /* Navegar a reserva desde el modal (RF11) */
+  const navigate = useNavigate()
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
@@ -310,8 +312,10 @@ function DetalleModal({ vehiculo, onClose, rol }) {
             </div>
           )}
 
-          {/* CTA */}
-          <button disabled={!vehiculo.disponible}
+          {/* CTA — navega a la página de reserva RF11 */}
+          <button
+            disabled={!vehiculo.disponible}
+            onClick={() => navigate('/reserva', { state: { vehiculo } })}
             className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white font-black text-sm tracking-wide hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 shadow-lg shadow-blue-900/20">
             {vehiculo.disponible ? 'ALQUILAR AHORA' : 'NO DISPONIBLE'}
           </button>
@@ -324,6 +328,8 @@ function DetalleModal({ vehiculo, onClose, rol }) {
 /* ─── Card vehículo ─── */
 function VehiculoCard({ v, onVerDetalle, rol }) {
   const [imgError, setImgError] = useState(false)
+  /* Navegar a la página de reserva del vehículo (RF11) */
+  const navigate = useNavigate()
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden flex flex-col">
       {/* Imagen */}
@@ -376,8 +382,10 @@ function VehiculoCard({ v, onVerDetalle, rol }) {
             className="flex-1 py-2.5 rounded-xl border-2 border-[#1e3a8a] text-[#1e3a8a] font-black text-xs hover:bg-blue-50 transition-colors">
             VER DETALLES
           </button>
+          {/* Botón ALQUILAR: navega a la página de reserva RF11 */}
           <button
             disabled={!v.disponible}
+            onClick={() => navigate('/reserva', { state: { vehiculo: v } })}
             className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white font-black text-xs hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95">
             ALQUILAR
           </button>
